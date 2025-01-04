@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>theme toggle</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .container {
+        display: flex;
+        gap: 4rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <button id="toggle-theme">change Theme</button>
+      <button id="toggle-custom">custom theme</button>
+      <h1 id="h1-heading">Hello world</h1>
+
+      <div class="container">
+        <div>
+          <label id="one"> custom background</label>
+          <input type="color" id="custom-background" />
+        </div>
+        <div>
+          <label id="two">custom color</label>
+          <input type="color" id="custom-text-color" />
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
