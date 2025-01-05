@@ -9,6 +9,7 @@ const Home = () => {
         method: "GET",
       });
       const result = await response.json();
+      console.log(result.data);
       setData(result.data);
     } catch (err) {
       console.error(err);
@@ -17,7 +18,17 @@ const Home = () => {
 
   async function handleRemove(postId) {}
 
-  async function handleDelete(postId) {}
+  async function handleDelete(idx, postId) {
+    const postsData = data.posts.filter((post, index) => index !== idx);
+    setData((prev) => ({ ...prev, posts: [...postsData] }));
+
+    const response = await fetch(
+      `http://localhost:3000/deletepost/${postId}/${1}`,
+      { method: "DELETE" }
+    );
+    const result = await response.json();
+    console.log(result);
+  }
 
   useEffect(() => {
     getData();
@@ -94,7 +105,7 @@ const Home = () => {
                     Remove
                   </button>
                   <button
-                    onClick={() => handleDelete(index)}
+                    onClick={() => handleDelete(index, post._id)}
                     className="text-sm text-red-600 hover:text-red-800 focus:outline-none"
                   >
                     Delete

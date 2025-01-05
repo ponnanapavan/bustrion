@@ -60,4 +60,22 @@ app.get("/getUserData/:id", async (req, res) => {
   }
 });
 
+app.delete("/deletepost/:id/:userId", async (req, res) => {
+  try {
+    const { id, userId } = req.params;
+
+    console.log(id, userId);
+    const getPost = await userModel.findOne({ id: userId });
+    if (!getPost) {
+      return res.status(404).json({ message: "post not found", status: false });
+    }
+    const posts = getPost.posts.filter((post) => post._id.toString() !== id);
+    getPost.posts = posts;
+    await getPost.save();
+    res
+      .status(200)
+      .json({ success: true, message: "post deleted successfully" });
+  } catch (err) {}
+});
+
 app.listen(process.env.PORT, () => console.log("successfully listening"));
