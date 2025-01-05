@@ -15,10 +15,7 @@ const Home = () => {
     }
   }
 
-  async function handleRemove(postId) {
-    // Implement the logic for removing a post, such as updating state or sending a request to the backend
-    // Example: setData((prevData) => ({...prevData, posts: prevData.posts.filter(post => post.id !== postId)}));
-  }
+  async function handleRemove(postId) {}
 
   async function handleDelete(postId) {}
 
@@ -47,7 +44,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* User Profile */}
       <div className="bg-white shadow-md rounded-lg mb-8 p-6">
         {data ? (
           <>
@@ -71,7 +67,6 @@ const Home = () => {
         )}
       </div>
 
-      {/* User Posts - 3 Column Grid Layout */}
       <div className="bg-white shadow-md rounded-lg p-6">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">
           User Posts
