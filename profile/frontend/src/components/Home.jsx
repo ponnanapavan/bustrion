@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { Link } from "react-router-dom";
 const Home = () => {
   const [data, setData] = useState();
 
@@ -25,22 +25,25 @@ const Home = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Header Section with Buttons */}
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-semibold text-gray-800">User Profile</h1>
         <div className="space-x-4">
-          <button
-            onClick={() => {}}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none"
-          >
-            + Add Post
-          </button>
-          <button
-            onClick={() => {}}
-            className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none"
-          >
-            + Add Profile
-          </button>
+          <Link to="/post">
+            <button
+              onClick={() => {}}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none"
+            >
+              + Add Post
+            </button>
+          </Link>
+          <Link to="/userprofile">
+            <button
+              onClick={() => {}}
+              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none"
+            >
+              + Add Profile
+            </button>
+          </Link>
         </div>
       </div>
 
@@ -91,7 +94,7 @@ const Home = () => {
                     Remove
                   </button>
                   <button
-                    onClick={() => handleDelete(post.id)}
+                    onClick={() => handleDelete(index)}
                     className="text-sm text-red-600 hover:text-red-800 focus:outline-none"
                   >
                     Delete
