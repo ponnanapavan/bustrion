@@ -1,16 +1,21 @@
 import React, { useContext, useState } from "react";
 import { Context } from "./context";
+import { useNavigate } from "react-router-dom";
 
 const Post = () => {
   const { user } = useContext(Context);
+  const [loading, setLoading] = useState(false);
   const [post, setPost] = useState({
     id: user,
     postTitle: "",
     postBody: "",
   });
 
+  const navigate = useNavigate();
+
   async function handleSubmit() {
     try {
+      setLoading(true);
       const response = await fetch("http://localhost:3000/addPost", {
         method: "PUT",
         headers: {
@@ -21,9 +26,13 @@ const Post = () => {
 
       const result = await response.json();
       setPost({ postTitle: "", postBody: "" });
+      if (result.success) navigate("/");
+
       console.log(result);
     } catch (err) {
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -53,12 +62,21 @@ const Post = () => {
         />
       </div>
 
-      <button
-        onClick={handleSubmit}
-        className="w-full py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-300"
-      >
-        Save Post
-      </button>
+      {loading ? (
+        <button
+          onClick={handleSubmit}
+          className="w-full py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-300"
+        >
+          Saveing
+        </button>
+      ) : (
+        <button
+          className="w-full py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-300"
+          onClick={handleSubmit}
+        >
+          Save Post
+        </button>
+      )}
     </div>
   );
 };

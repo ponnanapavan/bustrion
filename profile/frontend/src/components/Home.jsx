@@ -45,15 +45,12 @@ const Home = () => {
         <h1 className="text-3xl font-semibold text-gray-800">User Profile</h1>
         <div className="space-x-4">
           <Link to="/post">
-            <button
-              onClick={() => {}}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none"
-            >
+            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none">
               + Add Post
             </button>
           </Link>
           {user ? (
-            <Link to="/userprofile">
+            <Link to={`/updateProfile/${user}`}>
               <button
                 onClick={() => {}}
                 className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none"
@@ -114,12 +111,6 @@ const Home = () => {
                 <p className="text-gray-600 mt-2">{post.postBody}</p>
 
                 <div className="mt-4 flex justify-between">
-                  <button
-                    onClick={() => handleRemove(post.id)}
-                    className="text-sm text-yellow-600 hover:text-yellow-800 focus:outline-none"
-                  >
-                    update
-                  </button>
                   <button
                     onClick={() => handleDelete(index, post._id)}
                     className="text-sm text-red-600 hover:text-red-800 focus:outline-none"

@@ -16,11 +16,19 @@ connectDb();
 app.post("/userprofile", async (req, res) => {
   try {
     const data = req.body;
+    console.log(data);
     const user = new userModel(data);
     await user.save();
-    res.status(201).json({ message: "user created successfully", data: user });
+
+    res
+      .status(201)
+      .json({
+        success: true,
+        message: "user created successfully",
+        data: user,
+      });
   } catch (err) {
-    res.status(500).json({ error: "internal server error" });
+    res.status(500).json({ success: false, error: "internal server error" });
   }
 });
 
@@ -76,6 +84,28 @@ app.delete("/deletepost/:id/:userId", async (req, res) => {
       .status(200)
       .json({ success: true, message: "post deleted successfully" });
   } catch (err) {}
+});
+
+app.put("/updateProfile", async (req, res) => {
+  try {
+    const data = req.body;
+    console.log(data.name, data.bio, data.interests);
+    const userData = await userModel.findOne({ id: data.id });
+    if (!userData)
+      return res
+        .status(404)
+        .json({ success: false, message: "user not found" });
+
+    userData.name = data.name || userData.name;
+    userData.bio = data.bio || userData.bio;
+    userData.interests = data.interests || userData.interests;
+
+    await userData.save();
+
+    res.status(200).json({ success: true, userData });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "internal server error " });
+  }
 });
 
 app.listen(process.env.PORT, () => console.log("successfully listening"));

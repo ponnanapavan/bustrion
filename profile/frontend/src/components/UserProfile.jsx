@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Interest from "./Interest";
 import { v4 as uuidv4 } from "uuid";
-
+import { useNavigate } from "react-router-dom";
+import { Context } from "./context";
 const UserProfile = () => {
   const [profileData, setProfileData] = useState({
     id: uuidv4(),
@@ -9,6 +10,9 @@ const UserProfile = () => {
     bio: "",
     interests: [],
   });
+
+  const navigate = useNavigate("");
+  const { setUser } = useContext(Context);
 
   async function saveProfile() {
     try {
@@ -22,6 +26,11 @@ const UserProfile = () => {
 
       const res = await response.json();
       localStorage.setItem("userItem", res.data.id);
+
+      if (res.success) {
+        setUser(res.data.id);
+        navigate("/");
+      }
       console.log(res);
     } catch (err) {
       console.error(err);
