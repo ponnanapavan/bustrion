@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Interest from "./Interest";
+import { v4 as uuidv4 } from "uuid";
 
 const UserProfile = () => {
   const [profileData, setProfileData] = useState({
-    id: 1,
+    id: uuidv4(),
     name: "",
     bio: "",
     interests: [],
@@ -20,6 +21,7 @@ const UserProfile = () => {
       });
 
       const res = await response.json();
+      localStorage.setItem("userItem", res.data.id);
       console.log(res);
     } catch (err) {
       console.error(err);

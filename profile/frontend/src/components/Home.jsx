@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "./context";
 const Home = () => {
   const [data, setData] = useState();
+  const { user } = useContext(Context);
 
   async function getData() {
     try {
-      const response = await fetch(`http://localhost:3000/getUserData/${1}`, {
-        method: "GET",
-      });
+      const response = await fetch(
+        `http://localhost:3000/getUserData/${user}`,
+        {
+          method: "GET",
+        }
+      );
       const result = await response.json();
-      console.log(result.data);
+
       setData(result.data);
     } catch (err) {
       console.error(err);
@@ -23,7 +28,7 @@ const Home = () => {
     setData((prev) => ({ ...prev, posts: [...postsData] }));
 
     const response = await fetch(
-      `http://localhost:3000/deletepost/${postId}/${1}`,
+      `http://localhost:3000/deletepost/${postId}/${user}`,
       { method: "DELETE" }
     );
     const result = await response.json();
@@ -47,14 +52,25 @@ const Home = () => {
               + Add Post
             </button>
           </Link>
-          <Link to="/userprofile">
-            <button
-              onClick={() => {}}
-              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none"
-            >
-              + Add Profile
-            </button>
-          </Link>
+          {user ? (
+            <Link to="/userprofile">
+              <button
+                onClick={() => {}}
+                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none"
+              >
+                Update Profile
+              </button>
+            </Link>
+          ) : (
+            <Link to="/userprofile">
+              <button
+                onClick={() => {}}
+                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none"
+              >
+                + Add Profile
+              </button>
+            </Link>
+          )}
         </div>
       </div>
 
@@ -102,7 +118,7 @@ const Home = () => {
                     onClick={() => handleRemove(post.id)}
                     className="text-sm text-yellow-600 hover:text-yellow-800 focus:outline-none"
                   >
-                    Remove
+                    update
                   </button>
                   <button
                     onClick={() => handleDelete(index, post._id)}

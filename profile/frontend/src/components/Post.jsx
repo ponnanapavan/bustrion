@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { Context } from "./context";
 
 const Post = () => {
+  const { user } = useContext(Context);
   const [post, setPost] = useState({
-    id: 1,
+    id: user,
     postTitle: "",
     postBody: "",
   });
